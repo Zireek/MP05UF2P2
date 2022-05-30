@@ -1,4 +1,4 @@
-package main.java.original;
+package main.java.ex2;
 
 // Original source code: https://gist.github.com/amadamala/3cdd53cb5a6b1c1df540981ab0245479
 // Modified by Fernando Porrino Serrano for academic purposes.
@@ -14,33 +14,59 @@ public class HashTable {
     private int ITEMS = 0;
     private HashEntry[] entries = new HashEntry[SIZE];
 
-    public int count(){
+    public int count() {
         return this.ITEMS;
     }
 
-    public int size(){
+    public int size() {
         return this.SIZE;
     }
 
     /**
      * Permet afegir un nou element a la taula.
-     * @param key La clau de l'element a afegir.
+     *
+     * @param key   La clau de l'element a afegir.
      * @param value El propi element que es vol afegir.
      */
     public void put(String key, String value) {
         int hash = getHash(key);
         final HashEntry hashEntry = new HashEntry(key, value);
 
-        if(entries[hash] == null) {
-            entries[hash] = hashEntry;
-        }
-        else {
-            HashEntry temp = entries[hash];
-            while(temp.next != null)
-                temp = temp.next;
+//        if(entries[hash] == null) {
+//            entries[hash] = hashEntry;
+//        }
+//        else {
+//            HashEntry temp = entries[hash];
+//            while(temp.next != null)
+//                temp = temp.next;
+//
+//            temp.next = hashEntry;
+//            hashEntry.prev = temp;
+//        }
 
-            temp.next = hashEntry;
-            hashEntry.prev = temp;
+        boolean actualizado = false;
+
+        if (entries[hash] == null) {
+            ITEMS++;
+            entries[hash] = hashEntry;
+        } else {
+            HashEntry temp = entries[hash];
+            if (temp.key.equals(key)) {
+                temp.value = value;
+            } else {
+                while (temp.next != null)
+                    temp = temp.next;
+                if (temp.key.equals(key)) {
+                    temp.value = value;
+                    actualizado = true;
+                }
+            }
+            if (!actualizado) {
+                temp.next = hashEntry;
+                hashEntry.prev = temp;
+                ITEMS++;
+            }
+
         }
     }
 
