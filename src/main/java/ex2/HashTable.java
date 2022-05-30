@@ -54,19 +54,20 @@ public class HashTable {
             if (temp.key.equals(key)) {
                 temp.value = value;
             } else {
-                while (temp.next != null)
+                while (temp.next != null) {
                     temp = temp.next;
-                if (temp.key.equals(key)) {
-                    temp.value = value;
-                    actualizado = true;
+                    if (temp.key.equals(key)) {
+                        temp.value = value;
+                        actualizado = true;
+                    }
                 }
-            }
-            if (!actualizado) {
-                temp.next = hashEntry;
-                hashEntry.prev = temp;
-                ITEMS++;
-            }
+                if (!actualizado) {
+                    temp.next = hashEntry;
+                    hashEntry.prev = temp;
+                    ITEMS++;
+                }
 
+            }
         }
     }
 
@@ -76,13 +77,27 @@ public class HashTable {
      * @return El propi element que es busca (null si no s'ha trobat).
      */
     public String get(String key) {
+
+//        int hash = getHash(key);
+//        if(entries[hash] != null) {
+//            HashEntry temp = entries[hash];
+//
+//            while( !temp.key.equals(key))
+//                temp = temp.next;
+//
+//            return temp.value;
+//        }
+
         int hash = getHash(key);
         if(entries[hash] != null) {
             HashEntry temp = entries[hash];
-
-            while( !temp.key.equals(key))
-                temp = temp.next;
-
+            while( !temp.key.equals(key)){
+                if (temp.next != null){
+                    temp = temp.next;
+                }else{
+                    return null;
+                }
+            }
             return temp.value;
         }
 
@@ -94,19 +109,50 @@ public class HashTable {
      * @param key La clau de l'element a trobar.
      */
     public void drop(String key) {
+//        int hash = getHash(key);
+//        if(entries[hash] != null) {
+//
+//            HashEntry temp = entries[hash];
+//            while( !temp.key.equals(key))
+//                temp = temp.next;
+//
+//            if(temp.prev == null) entries[hash] = null;             //esborrar element únic (no col·lissió)
+//            else{
+//                if(temp.next != null) temp.next.prev = temp.prev;   //esborrem temp, per tant actualitzem l'anterior al següent
+//                temp.prev.next = temp.next;                         //esborrem temp, per tant actualitzem el següent de l'anterior
+//            }
+//        }
         int hash = getHash(key);
         if(entries[hash] != null) {
 
             HashEntry temp = entries[hash];
-            while( !temp.key.equals(key))
-                temp = temp.next;
-
-            if(temp.prev == null) entries[hash] = null;             //esborrar element únic (no col·lissió)
-            else{
-                if(temp.next != null) temp.next.prev = temp.prev;   //esborrem temp, per tant actualitzem l'anterior al següent
-                temp.prev.next = temp.next;                         //esborrem temp, per tant actualitzem el següent de l'anterior
+            while( !temp.key.equals(key)){
+                if (temp.next != null){
+                    temp = temp.next;
+                }else {
+                    temp = null;
+                    break;
+                }
+            }
+            if (temp != null){
+                if(temp.prev == null) {
+                    if (temp.next == null){
+                        entries[hash] = null;
+                    }else{
+                        entries[hash] = temp.next;
+                    }
+                } else {
+                    if(temp.next != null){
+                        temp.next.prev = temp.prev;
+                        temp.prev.next = temp.next;
+                    }else{
+                        temp.prev.next = null;
+                    }
+                }
+                ITEMS--;
             }
         }
+
     }
 
     private int getHash(String key) {
