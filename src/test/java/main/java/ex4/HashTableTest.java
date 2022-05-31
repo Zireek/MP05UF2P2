@@ -1,6 +1,6 @@
-package main.java.ex2;
+package main.java.ex4;
 
-import ex2.HashTable;
+import ex4.HashTable;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -23,52 +23,52 @@ class HashTableTest {
 
         //Insertar un elemento que no colisiona dentro de una tabla vacia.
 
-        hashTable.put("1", "eric");
+        hashTable.put("1", 1234);
         Assertions.assertEquals(1,hashTable.count());
         Assertions.assertEquals(16,hashTable.size());
-        Assertions.assertEquals("\n" + " bucket[1] = [1, eric]",hashTable.toString());
+        Assertions.assertEquals("\n" + " bucket[1] = [1, 1234]",hashTable.toString());
 
         //Insertar un elemento que no colisiona dentro de una tabla no vacia.
 
         hashTable.put("2","eric2");
         Assertions.assertEquals(2,hashTable.count());
         Assertions.assertEquals(16,hashTable.size());
-        Assertions.assertEquals("\n" + " bucket[1] = [1, eric]" + "\n" + " bucket[2] = [2, eric2]",hashTable.toString());
+        Assertions.assertEquals("\n" + " bucket[1] = [1, 1234]" + "\n" + " bucket[2] = [2, eric2]",hashTable.toString());
 
         //Insertar un elemeto que colisiona dentro de una tabla no vacia que se colocara en la segunda posicion dentro del mismo bucket.
 
         hashTable.put("13","eric3");
         Assertions.assertEquals(3,hashTable.count());
         Assertions.assertEquals(16,hashTable.size());
-        Assertions.assertEquals("\n" + " bucket[1] = [1, eric]" + "\n" + " bucket[2] = [2, eric2] -> [13, eric3]",hashTable.toString());
+        Assertions.assertEquals("\n" + " bucket[1] = [1, 1234]" + "\n" + " bucket[2] = [2, eric2] -> [13, eric3]",hashTable.toString());
 
         //Insertar un elemento que colisiona dentro de una tabla no vacia que se solocara en la tercerta posicion dento del mismo bucket.
 
         hashTable.put("24","eric4");
         Assertions.assertEquals(4,hashTable.count());
         Assertions.assertEquals(16,hashTable.size());
-        Assertions.assertEquals("\n" + " bucket[1] = [1, eric]" + "\n" + " bucket[2] = [2, eric2] -> [13, eric3] -> [24, eric4]",hashTable.toString());
+        Assertions.assertEquals("\n" + " bucket[1] = [1, 1234]" + "\n" + " bucket[2] = [2, eric2] -> [13, eric3] -> [24, eric4]",hashTable.toString());
 
         //Insertar un elemento que ya existe sobre un elemento que no colisiona dentro de una tabla no vacia.
 
         hashTable.put("2","eric5");
         Assertions.assertEquals(4,hashTable.count());
         Assertions.assertEquals(16,hashTable.size());
-        Assertions.assertEquals("\n" + " bucket[1] = [1, eric]" + "\n" + " bucket[2] = [2, eric5] -> [13, eric3] -> [24, eric4]",hashTable.toString());
+        Assertions.assertEquals("\n" + " bucket[1] = [1, 1234]" + "\n" + " bucket[2] = [2, eric5] -> [13, eric3] -> [24, eric4]",hashTable.toString());
 
         //Insertar un elemento que ya existe sobre un elemento que si colisiona en la segunda posicion dentro de una tabla no vacia.
 
         hashTable.put("13","eric6");
         Assertions.assertEquals(4,hashTable.count());
         Assertions.assertEquals(16,hashTable.size());
-        Assertions.assertEquals("\n" + " bucket[1] = [1, eric]" + "\n" + " bucket[2] = [2, eric5] -> [13, eric6] -> [24, eric4]",hashTable.toString());
+        Assertions.assertEquals("\n" + " bucket[1] = [1, 1234]" + "\n" + " bucket[2] = [2, eric5] -> [13, eric6] -> [24, eric4]",hashTable.toString());
 
         //Insertar un elemento que ya existe sobre un elemento que si colisiona tercera posicion dentro de una tabla no vacia.
 
         hashTable.put("24","eric7");
         Assertions.assertEquals(4,hashTable.count());
         Assertions.assertEquals(16,hashTable.size());
-        Assertions.assertEquals("\n" + " bucket[1] = [1, eric]" + "\n" + " bucket[2] = [2, eric5] -> [13, eric6] -> [24, eric7]",hashTable.toString());
+        Assertions.assertEquals("\n" + " bucket[1] = [1, 1234]" + "\n" + " bucket[2] = [2, eric5] -> [13, eric6] -> [24, eric7]",hashTable.toString());
 
     }
 

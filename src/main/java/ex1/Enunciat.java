@@ -1,4 +1,4 @@
-package main.java.ex1;
+package ex1;
 
 public class Enunciat {
 /*

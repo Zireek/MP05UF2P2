@@ -1,6 +1,6 @@
-package main.java.ex2;
+package main.java.ex3;
 
-import ex2.HashTable;
+import ex3.HashTable;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
